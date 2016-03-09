@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script>
+            
+            $(document).ready(function(){
+                      
+                $("#button").click(function(){
+                    var sendtext = $("#post_response").val();
+                if(sendtext == "") {
+                    $("#button").attr('value', 'resubmit');
+                }
+                 else {   
+                     $("#button").attr('value', 'submit');
+                    $.ajax({
+                        type: "POST",
+                        url: "index.php",
+                        data: {SomeText: sendtext},
+                        dataType: "Json",   
+                        success: function(data) { 
+                            if(data.status == 'success')
+                                    $("#result").html("Successfully recieved data from user");  
+                            else if(data.status == 'error')
+                                    $("#result").html("No Content");
+                                                            },
+      
+                            });}
+                   
+                                               });
+                                               
+   
+                                                
+                    $("#button3").click(function(){
+                    var result = $("#bol").val();   
+                     if(result == "") {
+                    $("#button3").attr('value', 'resubmit');
+                }
+                 else {   
+                     $("#button3").attr('value', 'true or false');
+                        $.ajax({
+                        type: "GET",
+                        url: "index.php",
+                        data: {result: result},
+                        dataType: "Json",   
+                        success: function(data) { 
+                            if(data.result == "true")
+                                    $("#result").html(data.text);  
+                            else if(data.result == "false")
+                                    $("#result").html(data.text);
+                            else $("#result").html(data.text);
+                                                            },
+      
+                            });}
+                   
+
+
+                                            });
+                                                     
+                    $("#button4").click(function(){
+                    var item = $("#item").val();   
+                    if(item == "") {
+                    $("#button4").attr('value', 'resubmit');
+                }
+                 else {   
+                     $("#button4").attr('value', 'item');
+                        $.ajax({
+                        type: "GET",
+                        url: "index.php",
+                        data: {item: item},
+                        dataType: "Json",   
+                        success: function(data) { 
+                                    $("#result").html(data.item +" "+data.type);  
+                                    
+                                                            },
+      
+                            });}
+                            });
+                                            });
+                                                                         
+    
+        </script>
+    </head>
+    <body>
+        
+        SomeText:<input type="text" id="post_response" name="SomeText" placeholder="" />
+        <br/>
+        <input type="button" id="button" value="submit" />    
+        <br />
+        true or false:<input type="text" id="bol" name="bol" placeholder="" />
+        <br />
+        <input type="button" id="button3" value="true or false" />
+        <br />
+        data_set:<input type="text" id="item" name="item" placeholder="" />
+        <br />
+        <input type="button" id="button4" value="item" />
+        <p><div id="result"></div>
+    </body>
+</html>
